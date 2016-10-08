@@ -1,5 +1,5 @@
 # Java on Ubuntu
-FROM FROM openjdk:7
+FROM openjdk:8
 
 # Environment setup
 USER root
@@ -15,13 +15,15 @@ RUN apt-get update -y && \
 
 WORKDIR /opt/elasticsearch-2.4.1/bin
 
+VOLUME /data
+
 RUN chown elasticsearch:elasticsearch /opt/elasticsearch-2.4.1 -R
 
-COPY elasticsearch.yml /etc/elasticsearch/config/
+COPY config/elasticsearch.yml /opt/elasticsearch-2.4.1/config/elasticsearch.yml
 
 USER elasticsearch
+CMD ./elasticsearch
 
-CMD ./elasticsearch -Des.network.host=0.0.0.0
-
+# Expose ourselves
 EXPOSE 9200
 EXPOSE 9300
