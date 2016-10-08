@@ -1,0 +1,19 @@
+version: '2'
+services:
+
+  elasticsearch:
+    build: elasticsearch
+    ports:
+     - "9200:9200"
+     - "9300:9300"
+    volumes:
+     - /tmp:/data
+
+  logstash:
+    build: logstash
+    ports:
+     - "5044:5044"
+    depends_on:
+     - elasticsearch
+    links:
+     - elasticsearch

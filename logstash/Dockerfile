@@ -9,7 +9,7 @@ RUN groupadd -r logstash && useradd -r -g logstash logstash
 
 # Get what we need to make this fiasco work
 RUN apt-get update -y && \
-    apt-get install apt-transport-https telnet -y && \
+    apt-get install apt-transport-https telnet curl -y && \
     wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | apt-key add - && \
     echo "deb https://packages.elastic.co/logstash/2.4/debian stable main" | tee -a /etc/apt/sources.list && \
     apt-get update -y && apt-get install logstash -y
@@ -18,10 +18,12 @@ WORKDIR /opt/logstash
 
 RUN chown logstash:logstash /opt/logstash -R
 
-#COPY config/elasticsearch.yml /opt/elasticsearch-2.4.1/config/elasticsearch.yml
+COPY config/*.conf /etc/logstash/conf.d/
 
-USER elasticsearch
-CMD ./elasticsearch
+USER logstash
+CMD sleep 5 && bin/logstash agent -f /etc/logstash/conf.d/*.conf --configtest
+#CMD sleep 10 && curl elasticsearch:9200
+#CMD bash
 
 # Expose ourselves
-EXPOSE 6999
+EXPOSE 5044
