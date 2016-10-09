@@ -12,7 +12,9 @@ This starts all containers and links them together, exposing ports and mapping t
 After making config file changes you can restart the stack with:
 
 ``` docker-compose down```
+
 ``` docker-compose build```
+
 ``` docker-compose up```
 
 # Manually Running a Container
