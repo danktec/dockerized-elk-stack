@@ -21,7 +21,7 @@ RUN chown logstash:logstash /opt/logstash -R
 COPY config/*.conf /etc/logstash/conf.d/
 
 USER logstash
-CMD sleep 5 && bin/logstash agent -f /etc/logstash/conf.d/*.conf --configtest
+CMD bin/logstash agent -f /etc/logstash/conf.d/
 #CMD sleep 10 && curl elasticsearch:9200
 #CMD bash
 
