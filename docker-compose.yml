@@ -13,6 +13,7 @@ services:
     build: logstash
     ports:
      - "5044:5044"
+     - "12201:12201/udp"
     depends_on:
      - elasticsearch
     links:
